@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAVE INSURANCE - Comparación de Precios</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --color-primary: #1E88E5; /* Azul para Tecnología/Seguridad */
+            --color-secondary: #4CAF50; /* Verde para Ahorro/Confianza */
+            --color-dark: #37474F;
+            --color-light: #F9F9F9;
+            --color-text: #555;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--color-light);
+            color: var(--color-text);
+        }
+
+        header {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        /* Estilo para la imagen del logo */
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid var(--color-secondary);
+            object-fit: cover;
+            background-color: white;
+        }
+
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        header h2 {
+            font-size: 1.1em;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .search-bar {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        #search-input {
+            padding: 12px 20px;
+            width: 100%;
+            max-width: 500px;
+            border: 2px solid var(--color-primary);
+            border-radius: 50px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        #search-input:focus {
+            box-shadow: 0 0 10px rgba(30, 136, 229, 0.4);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding-bottom: 40px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #eee;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Contenedor de la imagen del producto */
+        .product-image-container {
+            height: 200px;
+            overflow: hidden;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Estilo para las imágenes de los productos */
+        .product-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionar */
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover .product-image-container img {
+            transform: scale(1.05);
+        }
+
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-info h3 {
+            color: var(--color-dark);
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .product-info h4 {
+            color: var(--color-secondary);
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #E8F5E9;
+            padding-bottom: 5px;
+        }
+
+        .price-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .price-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            font-size: 0.95em;
+        }
+
+        .price-list li:last-child {
+            border-bottom: none;
+        }
+
+        .store-name {
+            color: var(--color-dark);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .store-name i {
+            margin-right: 8px;
+            color: var(--color-primary);
+        }
+
+        .price-value {
+            color: #C62828;
+            font-weight: bold;
+            background-color: #FFEBEE;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .best-price .price-value {
+            color: white;
+            background-color: var(--color-secondary);
+            font-size: 1.05em;
+            border-radius: 6px;
+            padding: 5px 10px;
+        }
+
+        .best-price .store-name {
+            color: var(--color-secondary);
+            font-weight: 700;
+        }
+
+        footer {
+            background-color: var(--color-dark);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 0.9em;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo">
+            <img src="https://via.placeholder.com/50x50/4CAF50/FFFFFF?text=Logo" alt="Logo SAVE INSURANCE" class="logo-img">
+            <h1>SAVE INSURANCE</h1>
+        </div>
+        <h2>Tranquilidad y ahorro, en un solo lugar</h2> </div>
+</header>
+
+<div class="container">
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Buscar productos, marcas o categorías...">
+    </div>
+
+    <div class="product-grid">
+
+        <div class="product-card" data-name="Licuadora Jarra 1.5L">
+            <div class="product-image-container">
+                <img src="https://via.placeholder.com/300x200/4CAF50/FFFFFF?text=Licuadora+SAVE" alt="Licuadora Jarra 1.5L">
+            </div>
+            <div class="product-info">
+                <h3>Licuadora Jarra 1.5L</h3>
+                <h4>Mejor Precio en la web:</h4>
+                <ul class="price-list">
+                    <li class="best-price">
+                        <a href="https://www.tienda-ejemplo.com/licuadora" target="_blank" class="store-name">
+                            <i class="fas fa-check-circle"></i>Almacenes ABC
+                        </a>
+                        <span class="price-value">$125.000</span>
+                    </li>
+                    <li>
+                        <a href="https://www.exito.com/licuadora-1-5l" target="_blank" class="store-name">
+                            <i class="fas fa-store"></i>Éxito
+                        </a>
+                        <span class="price-value">$139.900</span>
+                    </li>
+                    <li>
+                        <a href="https://www.tienda-ejemplo.com/licuadora" target="_blank" class="store-name">
+                            <i class="fas fa-store"></i>Mercado Electrónico
+                        </a>
+                        <span class="price-value">$145.500</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="product-card" data-name="Smartwatch Deportivo X1">
+            <div class="product-image-container">
+                <img src="https://via.placeholder.com/300x200/1E88E5/FFFFFF?text=Smartwatch+X1" alt="Smartwatch Deportivo X1">
+            </div>
+            <div class="product-info">
+                <h3>Smartwatch Deportivo X1</h3>
+                <h4>Mejor Precio en la web:</h4>
+                <ul class="price-list">
+                    <li>
+                        <a href="https://www.tienda-ejemplo.com/smartwatch" target="_blank" class="store-name">
+                            <i class="fas fa-store"></i>Tecno Store
+                        </a>
+                        <span class="price-value">$499.000</span>
+                    </li>
+                    <li class="best-price">
+                        <a href="https://www.tienda-ejemplo.com/smartwatch-x1" target="_blank" class="store-name">
+                            <i class="fas fa-check-circle"></i>Electro Más
+                        </a>
+                        <span class="price-value">$475.990</span>
+                    </li>
+                    <li>
+                        <a href="https://www.tienda-ejemplo.com/smartwatch-x1-oferta" target="_blank" class="store-name">
+                            <i class="fas fa-store"></i>Tiendas JKL
+                        </a>
+                        <span class="price-value">$510.000</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="product-card" data-name="Audífonos Inalámbricos ProSound">
+            <div class="product-image-container">
+                <img src="https://via.placeholder.com/300x200/FFC107/333333?text=Audífonos+Inalámbricos" alt="Audífonos Inalámbricos ProSound">
+            </div>
+            <div class="product-info">
+                <h3>Audífonos Inalámbricos ProSound</h3>
+                <h4>Mejor Precio en la web:</h4>
+                <ul class="price-list">
+                    <li>
+                        <a href="https://www.tienda-ejemplo.com/audifonos" target="_blank" class="store-name">
+                            <i class="fas fa-store"></i>Sound Expert
+                        </a>
+                        <span class="price-value">$220.000</span>
+                    </li>
+                    <li>
+                        <a href="https://www.tienda-ejemplo.com/audifonos-pro" target="_blank" class="store-name">
+                            <i class="fas fa-store"></i>Hi-Fi Audio
+                        </a>
+                        <span class="price-value">$235.000</span>
+                    </li>
+                    <li class="best-price">
+                        <a href="https://www.tienda-ejemplo.com/audifonos-oferta" target="_blank" class="store-name">
+                            <i class="fas fa-check-circle"></i>Ahorro Ya!
+                        </a>
+                        <span class="price-value">$199.900</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 SAVE INSURANCE. Todos los derechos reservados. | Agilidad, Transparencia y Seguridad.</p>
+</footer>
+
+<script>
+    // Script de búsqueda (mantenido y mejorado)
+    const searchInput = document.getElementById('search-input');
+    const productCards = document.querySelectorAll('.product-card');
+
+    // Función para realizar la búsqueda
+    function performSearch() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        productCards.forEach(card => {
+            const productName = card.getAttribute('data-name').toLowerCase();
+            if (productName.includes(searchTerm) || searchTerm === '') {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+    }
+
+    // Buscar en tiempo real mientras se escribe
+    searchInput.addEventListener('input', performSearch);
+</script>
+</body>
+</html>
